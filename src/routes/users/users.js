@@ -19,7 +19,7 @@ const loginUser = async (req, res) => {
     }
 
     const userToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
 
     res.json({
@@ -30,7 +30,7 @@ const loginUser = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Server error:", error); // Log the error
+    console.error("Server error:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -55,7 +55,7 @@ const loginWithGooglePopup = async (req, res) => {
 
     // Generate JWT token
     const userToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
 
     // Respond with user data and token
@@ -100,7 +100,7 @@ const registerUser = async (req, res) => {
 
     // Generate JWT token
     const userToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
 
     // Respond with user data and token

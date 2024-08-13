@@ -1,5 +1,5 @@
-# Mobi Shop Server
+# Heritage Nest
 
 ## Links:
 
-    Server status: https://mobi-shop-backend.vercel.app/status
+    Server status: https://heritage-nest-backend-mu.vercel.app/status
