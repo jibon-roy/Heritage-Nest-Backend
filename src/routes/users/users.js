@@ -2,12 +2,36 @@ import connectDB from "../../config/db/db.js";
 import usersModel from "../../models/users.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import mongoose from "mongoose";
 
 const allUsers = async (req, res) => {
   await connectDB();
   const users = await usersModel.find();
   res.send(users);
 };
+const deleteUser = async (req, res) => {
+  try {
+    await connectDB();
+
+    const id = req.params.id;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).send({ message: "Invalid user ID" });
+    }
+
+    const result = await usersModel.deleteOne({ _id: id });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    res.status(200).send({ message: "User deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).send({ message: "Internal server error" });
+  }
+};
+
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -127,4 +151,4 @@ const registerUser = async (req, res) => {
   }
 };
 
-export { allUsers, loginUser, loginWithGooglePopup, registerUser };
+export { allUsers, loginUser, loginWithGooglePopup, registerUser, deleteUser };
