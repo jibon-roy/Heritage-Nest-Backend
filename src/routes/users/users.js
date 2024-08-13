@@ -27,6 +27,10 @@ const loginUser = async (req, res) => {
       userInfo: {
         id: user._id,
         email: user.email,
+        name: user.name,
+        dateOfBirth: user.dateOfBirth,
+        gender: user.gender,
+        role: user.role,
       },
     });
   } catch (error) {
@@ -48,7 +52,8 @@ const loginWithGooglePopup = async (req, res) => {
         name,
         dateOfBirth,
         gender,
-        password: null, // Set password to null for Google users
+        password: null,
+        role: "bidder",
       });
       await user.save();
     }
@@ -67,6 +72,7 @@ const loginWithGooglePopup = async (req, res) => {
         name: user.name,
         dateOfBirth: user.dateOfBirth,
         gender: user.gender,
+        role: user.role,
       },
     });
   } catch (error) {
@@ -75,7 +81,7 @@ const loginWithGooglePopup = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
-  const { name, dateOfBirth, gender, email, uid, password } = req.body;
+  const { name, dateOfBirth, gender, email, uid, password, role } = req.body;
 
   try {
     // Check if user already exists
@@ -94,6 +100,7 @@ const registerUser = async (req, res) => {
       email,
       uid,
       password: password,
+      role,
     });
 
     await user.save();
@@ -108,10 +115,11 @@ const registerUser = async (req, res) => {
       userToken,
       userInfo: {
         id: user._id,
-        name: user.name,
         email: user.email,
+        name: user.name,
         dateOfBirth: user.dateOfBirth,
         gender: user.gender,
+        role: user.role,
       },
     });
   } catch (error) {
