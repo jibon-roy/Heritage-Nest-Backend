@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.status-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 300px;
+}
+
+.status-icon {
+  font-size: 48px;
+  color: #4caf50;
+}
+
+h1 {
+  margin: 20px 0;
+  font-size: 24px;
+  color: #333;
+}
+
+p {
+  color: #666;
+}
+
+.status-info {
+  margin-top: 20px;
+}
+
+.status {
+  font-size: 18px;
+  color: #4caf50;
+  font-weight: bold;
+}
