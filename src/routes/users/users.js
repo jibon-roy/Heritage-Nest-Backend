@@ -9,6 +9,32 @@ const allUsers = async (req, res) => {
   const users = await usersModel.find();
   res.send(users);
 };
+
+const updateUserRole = async (req, res) => {
+  const { id } = req.params;
+  const { role } = req.body;
+
+  if (!["admin", "property_owner", "bidder"].includes(role)) {
+    return res.status(400).json({ message: "Invalid role" });
+  }
+
+  try {
+    const user = await usersModel.findByIdAndUpdate(
+      id,
+      { role },
+      { new: true, runValidators: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
 const deleteUser = async (req, res) => {
   try {
     await connectDB();
@@ -151,4 +177,11 @@ const registerUser = async (req, res) => {
   }
 };
 
-export { allUsers, loginUser, loginWithGooglePopup, registerUser, deleteUser };
+export {
+  allUsers,
+  loginUser,
+  loginWithGooglePopup,
+  registerUser,
+  deleteUser,
+  updateUserRole,
+};
