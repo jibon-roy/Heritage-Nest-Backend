@@ -32,7 +32,7 @@ const getBids = async (req, res) => {
 const getBidById = async (req, res) => {
   const { id } = req.params;
   try {
-    const bid = await Bid.findById(id);
+    const bid = await Bid.find({ propertyId: id });
     res.status(200).json(bid);
   } catch (error) {
     console.error("Error retrieving bids:", error);

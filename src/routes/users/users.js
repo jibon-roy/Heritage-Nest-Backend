@@ -10,6 +10,25 @@ const allUsers = async (req, res) => {
   res.send(users);
 };
 
+const usersWithEmail = async (req, res) => {
+  try {
+    const emails = req.body;
+
+    if (!Array.isArray(emails)) {
+      return res
+        .status(400)
+        .json({ message: "Invalid data format. Expected an array of emails." });
+    }
+
+    await connectDB();
+    const users = await usersModel.find({ email: { $in: emails } });
+    res.send(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+};
+
 const updateUserRole = async (req, res) => {
   const { id } = req.params;
   const { role } = req.body;
@@ -184,4 +203,5 @@ export {
   registerUser,
   deleteUser,
   updateUserRole,
+  usersWithEmail,
 };

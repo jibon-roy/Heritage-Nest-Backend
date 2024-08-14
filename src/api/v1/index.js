@@ -6,6 +6,7 @@ import {
   loginWithGooglePopup,
   registerUser,
   updateUserRole,
+  usersWithEmail,
 } from "../../routes/users/users.js";
 import { verifyToken } from "../../config/middlewares/JWT.js";
 import { isAdmin, isPropertyOwner } from "../../config/middlewares/userRole.js";
@@ -21,7 +22,8 @@ import { getBidById, getBids, postBid } from "../../routes/bid/bid.js";
 
 const router = express.Router();
 // user routes
-router.use("/users", verifyToken, isAdmin, allUsers);
+router.get("/users/email", usersWithEmail);
+router.use("/users", allUsers);
 router.delete("/user/:id", verifyToken, isAdmin, deleteUser);
 router.put("/user/:id", verifyToken, isAdmin, updateUserRole);
 router.post("/user/login", loginUser);
