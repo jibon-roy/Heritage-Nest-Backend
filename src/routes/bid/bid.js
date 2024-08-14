@@ -1,4 +1,7 @@
 import { Bid } from "../../schema/bid.js";
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 
 const postBid = async (req, res) => {
   const { max, min, propertyId, bidder } = req.body;

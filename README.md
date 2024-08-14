@@ -13,9 +13,9 @@ Backend for the Heritage Nest project utilizing Express.js and Mongoose for a ro
 - **Environment Management**: dotenv
 - **CORS**: cors
 
-## Live Links:
+## Live Link:
 
-`Server status: https://heritage-nest-backend-mu.vercel.app/status`
+Server status: https://heritage-nest-backend-mu.vercel.app/status
 
 ## Setup
 
