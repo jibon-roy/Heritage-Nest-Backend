@@ -10,12 +10,14 @@ import {
 import { verifyToken } from "../../config/middlewares/JWT.js";
 import { isAdmin, isPropertyOwner } from "../../config/middlewares/userRole.js";
 import {
+  filterProperties,
   getAllProperty,
   getPropertyByEmail,
   getPropertyById,
   postProperty,
   updateProperty,
 } from "../../routes/property/property.js";
+import { getBidById, getBids, postBid } from "../../routes/bid/bid.js";
 
 const router = express.Router();
 // user routes
@@ -28,6 +30,7 @@ router.post("/user/register", registerUser);
 
 // property routes
 router.get("/properties", getAllProperty);
+router.get("/properties/search", filterProperties);
 router.get("/properties/:email", verifyToken, getPropertyByEmail);
 router.get("/property/:id", getPropertyById);
 router.post(
@@ -39,14 +42,18 @@ router.post(
 router.put(
   "/property/update/:id",
   verifyToken,
-  isPropertyOwner || isAdmin,
+  isAdmin || isPropertyOwner,
   updateProperty
 );
 router.delete(
   "/property/delete/:id",
   verifyToken,
-  isPropertyOwner || isAdmin,
+  isAdmin || isPropertyOwner,
   updateProperty
 );
 
+// bid section
+router.post("/bid", postBid);
+router.get("/bids", getBids);
+router.get("/bid/:id", getBidById);
 export default router;

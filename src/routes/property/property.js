@@ -42,6 +42,41 @@ const getAllProperty = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+const filterProperties = async (req, res) => {
+  await connectDB();
+  const { budget, category, location, propertyType, search } = req.body;
+
+  const query = {};
+  if (budget) {
+    query.bid_price_max = { $lte: parseInt(budget) };
+  }
+  if (category) {
+    query.category = category;
+  }
+  if (location) {
+    query.location = location;
+  }
+  if (propertyType) {
+    query.propertyType = propertyType;
+  }
+  if (search) {
+    query.$text = { $search: search };
+  }
+  try {
+    const properties = await Property.find(query);
+
+    if (properties.length === 0) {
+      return res.status(404).json({ message: "No properties found" });
+    }
+
+    res.json(properties);
+  } catch (error) {
+    console.error("Error filtering properties:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 const getPropertyByEmail = async (req, res) => {
   try {
     await connectDB();
@@ -106,4 +141,5 @@ export {
   updateProperty,
   deleteProperty,
   getPropertyByEmail,
+  filterProperties,
 };
