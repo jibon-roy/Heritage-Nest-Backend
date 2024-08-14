@@ -11,6 +11,7 @@ import { verifyToken } from "../../config/middlewares/JWT.js";
 import { isAdmin, isPropertyOwner } from "../../config/middlewares/userRole.js";
 import {
   getAllProperty,
+  getPropertyByEmail,
   getPropertyById,
   postProperty,
   updateProperty,
@@ -27,6 +28,7 @@ router.post("/user/register", registerUser);
 
 // property routes
 router.get("/properties", getAllProperty);
+router.get("/properties/:email", verifyToken, getPropertyByEmail);
 router.get("/property/:id", getPropertyById);
 router.post(
   "/add-property",

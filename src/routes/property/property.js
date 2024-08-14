@@ -42,6 +42,22 @@ const getAllProperty = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+const getPropertyByEmail = async (req, res) => {
+  try {
+    await connectDB();
+    const email = req.params.email;
+
+    const properties = await Property.find({ property_owner: email });
+
+    if (properties.length === 0) {
+      return res.status(404).json({ message: "No properties found" });
+    }
+    res.json(properties);
+  } catch (error) {
+    console.error("Error retrieving properties:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 const updateProperty = async (req, res) => {
   await connectDB();
@@ -89,4 +105,5 @@ export {
   getAllProperty,
   updateProperty,
   deleteProperty,
+  getPropertyByEmail,
 };
